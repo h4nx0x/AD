@@ -66,7 +66,7 @@ Cơ sở dữ liệu được lưu trữ trong tệp `C:\Windows\NTDS\ntds.dit`
 
 Tất cả các computer trong domain đều phải giao tiếp với **Domain Controller** để hỏi thông tin về database, do đó the Domain Controller có thể truy cập được từ bất kỳ phần nào của mạng.
 
-Thông thường, trong một miền có nhiều hơn một Domain Controllers, để phân phối khối lượng công việc và để đề phòng controller bị lỗi. Ngoài ra, như bất kỳ máy chủ cơ sở dữ liệu nào khác, Domain Controller phải được đồng bộ hóa với nhau để giữ cho dữ liệu được cập nhật.
+Thông thường, trong một forest có nhiều hơn một Domain Controllers, để phân phối khối lượng công việc và để đề phòng controller bị lỗi. Ngoài ra, như bất kỳ máy chủ cơ sở dữ liệu nào khác, Domain Controller phải được đồng bộ hóa với nhau để giữ cho dữ liệu được cập nhật.
 
 Hơn nữa, để cho phép máy tính và người dùng truy cập vào dữ liệu cơ sở dữ liệu, domain controller cung cấp một loạt dịch vụ như DNS, Kerberos, LDAP, SMB, RPC, v.v.
 
