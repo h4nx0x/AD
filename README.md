@@ -58,9 +58,9 @@ Forest hiểu đơn giản nó giống như 1 container chứa 1 hoặc nhiều 
 -   Domain Schema - chứa các định nghĩa của mọi lớp đối tượng trong forest và các quy tắc kiểm soát việc tạo và thao tác các đối tượng.
 
 ## Domain Controllers
-`Domain Controllers` là một Windows server đã cài đặt Active Directory Domain Services (AD DS) và đã được thăng cấp thành a domain controller trong  the forest.
+`Domain Controllers` là một Windows server đã cài đặt Active Directory Domain Services (AD DS) và đã được thăng cấp thành domain controller trong   forest.
 
-Domain Controllers là **máy chủ trung tâm của một miền** , đang chạy [Dịch vụ miền Active Directory](https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview) (AD DS). Điều đó có nghĩa là nó có trách nhiệm lưu giữ cơ sở dữ liệu miền với tất cả thông tin về các đối tượng miền và cung cấp các dịch vụ Active Directory, chẳng hạn như xác thực, ủy quyền, phân giải tên, v.v.
+Domain Controllers là **máy chủ trung tâm của một forest** , đang chạy [Dịch vụ miền Active Directory](https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview) (AD DS). Điều đó có nghĩa là nó có trách nhiệm lưu giữ cơ sở dữ liệu miền với tất cả thông tin về các đối tượng miền và cung cấp các dịch vụ Active Directory, chẳng hạn như xác thực, ủy quyền ,v.v.
 
 Cơ sở dữ liệu được lưu trữ trong tệp `C:\Windows\NTDS\ntds.dit` . Do đó, nếu ai đó đánh cắp tệp này, họ có thể truy cập vào tất cả thông tin về các đối tượng của domain (máy tính, người dùng, nhóm, chính sách, v.v.), bao gồm cả thông tin đăng nhập của người dùng.
 
