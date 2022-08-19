@@ -18,7 +18,7 @@
 Nếu cờ [NTLMSSP_NEGOTIATE_TARGET_INFO](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/99d90ff4-957f-4c8a-80e4-5bfe5a9a9832) được gửi trong 
 NEGOTIATE message thì server sẽ trả về trường TargetInfo trong CHALLENGE message chứa 1 số thông tin liên quan đến hostname và domain name.
 
-![](ntlm_recon_wireshark.png)
+![](img/ntlm_recon_wireshark.png)
 
 [ntlm-info](https://gitlab.com/Zer1t0/ntlm-info)
 
@@ -85,7 +85,7 @@ xfreerdp /u:<user> /d:<domain> /pth:<hash> / v:<ip>
 
 [NTLM Relay](https://en.hackndo.com/ntlm-relay/) bao gồm 1 người đứng ở giữa và lợi dụng vị trí trung gian của nó để chuyển hướng xác thực NTLM đến 1 máy chủ mà nó muốn để có lấy `authenticated session`.
 
-![](ntlm_relay_basic.png)
+![](img/ntlm_relay_basic.png)
 
 ```none
   client                 attacker               server
@@ -153,7 +153,7 @@ Nhưng liệu nó có đơn giản như vậy không, ta sẽ phải đi vào ch
 
 Để tránh việc attacker ở giữa có thể lấy được session và thực hiện các tác vụ độc hại với server thì SMBv2 trở đi các gói tin sau khi xác thực  yêu cầu phải được ký ở mặc định
 
-![](ntlm_session_signing_failed.png)
+![](img/ntlm_session_signing_failed.png)
 
 Làm sao để có lấy được chữ ký trong khi chữ ký được mã hóa bởi gói tin và `password hash` và password hash đâu được truyền trong đường truyền đâu, do đó ta không thể giả mạo được chữ ký.
 
@@ -161,23 +161,23 @@ Ta sẽ suy nghĩ theo chiều hướng khác là làm thế nào để loại b
 
 Ví dụ: nếu **DESKTOP01** muốn giao tiếp với  **DC01 ,** **DESKTOP01** trong gói tin đầu tiên chỉ ra rằng client hỗ trợ ký gói, không yêu cầu ký, nhưng có thể ký nếu cần, nếu cần.
 
-![](ntlm_ex1.png)
+![](img/ntlm_ex1.png)
 
 **DC01** chỉ ra rằng anh ấy không chỉ hỗ trợ việc ký mà còn yêu cầu nó.
 
-![](ntlm_ex2.png)
+![](img/ntlm_ex2.png)
 
 Trong giai đoạn thương lượng, client và server đặt cờ  `NEGOTIATE_SIGN` thành **1** vì cả hai đều hỗ trợ ký.
 
-![](ntlm_negotiate_flags.png)
+![](img/ntlm_negotiate_flags.png)
 
 Sau khi xác thực này hoàn tất, phiên tiếp tục và các packet tiếp theo sẽ được ký bởi hash password của client và gói tin.
 
-![](ntlm_ex3.png)
+![](img/ntlm_ex3.png)
 
 [link](https://docs.microsoft.com/fr-fr/archive/blogs/josebda/the-basics-of-smb-signing-covering-both-smb1-and-smb2)
 
-![](1Capture.PNG)
+![](img/1Capture.PNG)
 
 Vậy ta chỉ cần sửa gói tin và thay các cờ này thành 0 là ta sẽ k cần phải ký vào các gói tin. Ezzzzzzz !!!
 
@@ -203,11 +203,11 @@ MIC=HMAC_MD5(Session key, NEGOTIATE_MESSAGE + CHALLENGE_MESSAGE + AUTHENTICATE_M
 
 Điều quan trọng là session key được tính toán dựa trên password hash của client do đó kẻ tấn công sẽ không thể làm giả được mà thay vì đó họ sẽ phải tính toán để loại bỏ MIC ra khỏi gói tin , bao gồm cả việc thay đổi cờ mic thành 0.
 
-![](ntlm_mic_av.png)
+![](img/ntlm_mic_av.png)
 
 Nhưng điều này chỉ hữu ích với NTLMv1 vì NTLMv2 sẽ bảo vệ mic tốt hơn vì nó sẽ yêu cầu client cung cấp nhiều thông tin hơn để tránh việc bị làm giả.
 
-![](ntlm_mic_protection.png)
+![](img/ntlm_mic_protection.png)
 
 
 ```none
@@ -260,7 +260,7 @@ Hầu hết người dùng cần thực hiện xác thực trước Kerberos, ng
 
 Tuy nhiên, trong một số trường hợp hiếm hoi, xác thực trước Kerberos bị vô hiệu hóa đối với tài khoản bằng cách đặt [cờ DONT_REQUIRE_PREAUTH](https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/useraccountcontrol-manipulate-account-properties) . Do đó, bất kỳ ai cũng có thể mạo danh các tài khoản đó bằng cách gửi thông báo AS-REQ và [phản hồi AS-REP](https://tools.ietf.org/html/rfc4120#section-5.4.2) sẽ được trả về từ KDC mà dữ liệu được mã hóa bằng khóa Kerberos của người dùng. Từ đó ta có thể crack để lấy password của user này.
 
-![](Capture123.PNG)
+![](img/Capture123.PNG)
 
 LDAP query
 
@@ -304,15 +304,15 @@ Mặc khác trong Linux thì các vé được lưu trữ theo một cách khác
 PAC  được tìm thấy trong mọi vé (TGT hoặc TGS) và được mã hóa bằng khóa KDC hoặc bằng khóa của tài khoản dịch vụ được yêu cầu. Do đó, người dùng không có quyền kiểm soát thông tin này, vì vậy anh ta không thể sửa đổi các quyền, nhóm của chính mình, v.v
 Cấu trúc này rất quan trọng vì nó cho phép người dùng truy cập (hoặc không truy cập) một dịch vụ, một tài nguyên, để thực hiện các hành động nhất định.
 
-![](pac.png)
+![](img/pac.png)
 
 TGS được mã hóa bằng NT hash của tài khoản đang chạy dịch vụ (tài khoản máy hoặc tài khoản người dùng). Do đó, nếu kẻ tấn công quản lý để trích xuất mật khẩu hoặc mã băm NT của tài khoản dịch vụ, thì hắn có thể giả mạo phiếu dịch vụ (TGS) bằng cách chọn thông tin mà hắn muốn đưa vào để truy cập dịch vụ đó mà không cần hỏi KDC. 
 
-![](tgs.png)
+![](img/tgs.png)
 
  Sau đó anh ta chỉ cần gửi vé này đến dịch vụ được nhắm đến cùng với một số thông  xác thực mà anh ta mã hóa bằng session key giúp anh ta tùy ý chọn trong TGS. Dịch vụ sẽ có thể giải mã TGS, trích xuất khóa phiên, giải mã thông tin xác thực và cung cấp dịch vụ cho user vì thông tin giả mạo trong PAC chỉ ra rằng người dùng là Quản trị viên miền và dịch vụ này cho phép Quản trị viên miền sử dụng nó.
 
-![](silverticket.png)
+![](img/silverticket.png)
 
 ```none
 
@@ -337,7 +337,7 @@ Nếu kẻ tấn công từng tìm ra mã băm bí mật của tài khoản này
 
 Chính TGT này có tên là **Golden Ticket**
 
-![](goldenticket.png)
+![](img/goldenticket.png)
 
 
 ```none
