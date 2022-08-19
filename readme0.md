@@ -9,7 +9,7 @@
 3. [ASREProast](#asreproast)
 4. [Pass the Key/Over Pass the Hash](#pass-the-key-/-over-pass-the-hash)
 5. [Pass the Ticket](#pass-the-ticket)
-6. [Golden/Silver ticket](#golden-/-Silver-ticket)
+6. [Golden/Silver ticket](#golden-/-silver-ticket)
 
 
 # NTLM
